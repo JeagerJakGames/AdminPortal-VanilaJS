@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <form id="formLogin">
+            <div>
+                <div>
+                    <input id="txtUserName" type="text" placeholder="Enter A User Name"/>
+                    <input id="txtPassword" type="password" placeholder="Enter A Password"/>
+                    <button 
+                        type="button"
+                        onclick="LoginProcess()"
+                        >
+                        Login
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="tableDiv">
+
+    </div>
+
+    <script src="./users.js"></script>
+    <script src="./toast.js"></script>
+    <script src="./createGrid.js"></script>
+    <script>
+        const user = {};
+        const log = (str, type) => (type == null) ? console.log(str) : (type == 'err' || type == 'error') ? console.error(str) : console.warn(str);
+        const userData = new UserData();
+        const users = userData.GetUserByUserName('tweir12');
+        log(users);
+
+        const LoginProcess = () => {
+            log("LoginProcess");
+            try{
+                var pm = new PasswordManager(document.querySelector('#txtUserName').value);
+                const result = pm.CheckPassword(document.querySelector('#txtPassword').value);
+                log(result);
+                if(result.AccessGranted){
+                    const userData = new UserData();
+                    user = userData.GetUserByUserName(document.querySelector('#txtUserName'));
+                }
+                const t = new Toast(result.Message);
+                t.Show();
+            }
+            catch(e){
+                log(e, 'err');
+            }
+        }
+
+
+
+        ///HOW TO USE THE GRID
+
+        //1. CREATE GRID OBJECT, MUST HAVE a data parameter that is an array of objects.
+        const tableObj = {
+            //Required
+            data: [
+                {
+                    Name: "Trenton Weir",
+                    UserName: "tweir12",
+                    Password: "AReallySecurePassword"
+                },
+            ],
+            //Not required but recommended. 
+            //This is just the element that you want your table to be inside. 
+            tableParentObject: document.querySelector('#tableDiv'),
+        }
+
+        //create the instance of the object, and ust the object you created
+        //above for the constructor obj
+        const usersGrid = new Gridify(tableObj);
+        //Call init
+        usersGrid.init();
+
+        // These can be added to buttons or other means to edit tables
+        //Adds data to grid
+        //Requires an Object similar to what you used for the table
+        usersGrid.addData({Name:"New", UserName: 'New', Password:"New"});
+
+        //Removes data from grid. 
+        //Requires the object you want to remove and the key to identify with
+        //alternativly you can just enter a value and it will remove all objects 
+        //that have it 
+        usersGrid.removeData({
+            Name: "Trenton Weir",
+            UserName: "tweir12",
+            Password: "AReallySecurePassword"
+        }, 'UserName');
+
+
+    </script>
+    
+</body>
+</html>
