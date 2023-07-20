@@ -13,28 +13,42 @@ const PasswordResult = (msg, accessgranted) => ({
     Message: msg,
     AccessGranted: accessgranted
 });
+
+
+const getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+const addRandomNumbersToList = (howMany, minRange = 1, maxRange = 9999) => {
+    const resultList = [];
+    for (let i = 0; i < howMany; i++) {
+      const randomNumber = getRandomInt(minRange, maxRange);
+      resultList.push(randomNumber);
+    }
+    return resultList;
+  }
+
 class UserData {
     constructor() {
-        this.Users =
-            [
-                createUser('Trenton', 'Weir', 'tweir12', 1, 'tweir12@ivytech.edu'),
-                createUser('Trenton', 'Weir', 'tweir13', 2, 'tweir12@ivytech.edu'),
-                createUser('Trenton', 'Weir', 'tweir15', 3, 'tweir12@ivytech.edu'),
-                createUser('Trenton', 'Weir', 'tweir16', 4, 'tweir12@ivytech.edu'),
-            ]
-
+        this.Users = []
     }
-     GetAllUsers() {
-        return this.Users;
+    async GetAllUsers() {
+        let users = [];
+        await fetch('http://localhost:5000/api/User')
+            .then(data => data.json())
+            .then(data => {
+                users = data;
+            });
+        return users;
     }
-    GetUserById(id){
-        var res = null;
-        this.Users.forEach(x => {
-            if(x.Id == id){
-                res = x;
-            }
-        });
-        return res;
+    async GetUserById(id){
+        let user = {};
+        await fetch(`http://localhost:5000/api/User${id}`)
+            .then(data => data.json())
+            .then(data => {
+                user = data;
+            });
+        return user;
     }
     GetUserByUserName(username){
         var res = null;

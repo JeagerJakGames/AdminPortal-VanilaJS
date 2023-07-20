@@ -1,0 +1,44 @@
+.blur{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px); /* Adjust the blur value as per your preference */
+    -webkit-backdrop-filter: blur(5px); /* For Safari support */
+ 
+    
+}
+
+.spinner-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 50vw;
+    background-color: #363636;
+    margin: 0;
+}
+
+.spinner{
+    border: 4px solid rgba(0, 0, 0, 0.3);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
