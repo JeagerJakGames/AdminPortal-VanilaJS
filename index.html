@@ -3,89 +3,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Index</title>
 </head>
-<style>
-    :root{
-        --toast-width: 20em;
-        --toast-left-offset: calc(var(--toast-width)/2);
-    }
-    *{
-        padding: 0;
-        margin: 0;
-        font-family:Verdana, Geneva, Tahoma, sans-serif;
-    }
-    .toast{
-        position: absolute;
-        width:var(--toast-width);
-        height: 3em;
-        top: 0;
-        left: calc(50vh - var(--toast-left-offset));
-        background-color: black;
-        border-radius: 2em;
-        display: flex;
-        align-items: center;
-        padding-left: 2em;
-    }
-    .toast p{
-        color: white;
-        font-size: medium;
-    }
-    td{
-        padding: .2rem;
-    }
-
-</style>
 <body>
 
-    <div>
-        <form id="formLogin">
-            <div>
-                <div>
-                    <input 
-                        id="txtUserName" 
-                        type="text" 
-                        placeholder="Enter A User Name"/>
-                    <input 
-                        id="txtPassword" 
-                        type="password" 
-                        placeholder="Enter A Password"/>
-                    <button 
-                        type="button"
-                        onclick="submitclick()"
-                        >
-                        Login
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div id="tableDiv">
-
-    </div>
-
-    <button onclick="ActivateToast()">Toast</button>
-    <button onclick="DeleteTrent()">Delete Trenton</button>
-    <button onclick="AddNew()">Add New User</button>
+    <h1>Loading...</h1>
 
     <script>
-        //Testing
-        const log = str => console.log(str);
-        const txtUserName = document.querySelector('#txtUserName');
-        const txtPassword = document.querySelector('#txtPassword');
-        txtUserName.value = 'tweir12';
-        txtPassword.value = 'VerySecure?';
 
         window.location.assign('./pages/login.html');
 
     </script>
-
-    <script src="./scripts/Utils/utils.js"></script>
-    <script src="./scripts/data/users.js"></script>
-    <script src="./scripts/Utils/toast.js"></script>
-    <script src="./scripts/data/dataBase.js"></script>
-    <script src="./scripts/Utils/createGrid.js"></script>
-    <script src="./scripts/dom/createLoginForm.js"></script>
-    <script src="./scripts/main.js"></script>
 </body>
 </html>

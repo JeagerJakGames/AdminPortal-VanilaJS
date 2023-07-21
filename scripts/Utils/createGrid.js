@@ -77,6 +77,9 @@ class Gridify{
         //table based on the keys. 
         this.Data.forEach(d => {
             const row = document.createElement('tr');
+            if(d['id']){
+                row.id = d['id']
+            }
             this.DataKeys.forEach(key => {
                 const td = document.createElement('td');
                 td.innerHTML = d[key];

@@ -5,11 +5,26 @@
     <title>Users</title>
     <link rel="stylesheet" type="text/css" href="../styles/loader.css">
     <link rel="stylesheet" type="text/css" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/nav.css">
+    <link rel="stylesheet" href="../styles/table.css">
 </head>
 <body>
-
-    <div id="tableDiv"></div>
+        <!-- Nav section -->
+        <header>
+            <nav>
+                <ul>
     
+                </ul>
+            </nav>
+        </header>
+        <script defer src="../scripts/Utils/addNav.js"></script>
+        <!-- Nav section -->
+
+    <div class="table-container">
+        <div id="tableDiv"></div>
+    </div>
+    
+    <script src="../scripts/Utils/cookieUtils.js"></script>
     <script src="../scripts/data/users.js"></script>
     <script src="../scripts/Utils/createGrid.js"></script>
     <script src="../scripts/dom/loader.js"></script>

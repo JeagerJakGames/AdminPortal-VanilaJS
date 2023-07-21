@@ -3,10 +3,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOG IN</title>
+    <link rel="stylesheet" href="../styles/login.css">
 </head>
 <body>
-
-    
-    
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post" submit="Login()" >
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="Login()">Login</button>
+            </div>
+        </form>
+    </div>
+    <script src="../scripts/Utils/cookieUtils.js"></script>
+    <script>
+        const Login = e => {
+            const user = {
+                userName: document.querySelector('#username').value,
+                password: document.querySelector('#password').value
+            };
+            
+            fetch('http://localhost:5000/api/Login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+            .then(response =>{
+                if(response.ok){
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if(data){
+                    const cookUtl = new CookieUtils();
+                    cookUtl.setCookie('user', JSON.stringify(data), 20);
+                    const url = `./dashboard.html`;
+                    window.location.assign(url);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+            
+        }
+    </script>
 </body>
 </html>

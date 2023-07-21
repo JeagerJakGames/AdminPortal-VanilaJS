@@ -1,10 +1,47 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="../styles/nav.css">
+    <link rel="stylesheet" href="../styles/main.css">
+
 </head>
+
 <body>
-    
+    <!-- Nav section -->
+    <header>
+        <nav>
+            <ul>
+
+            </ul>
+        </nav>
+    </header>
+    <script defer src="../scripts/Utils/addNav.js"></script>
+    <!-- Nav section -->
+
+
+
+    <h1>DASHBOARD</h1>
+    <h3></h3>
+
+    <script src="../scripts/Utils/cookieUtils.js"></script>
+
+    <script>
+
+        var cookUtl = new CookieUtils();
+        let user = JSON.parse(cookUtl.getCookie('user'));
+        if (user == undefined || user == null || user == '') {
+            window.location.assign('./login.html')
+        }
+        console.log(user);
+
+        document.querySelector('h3').innerHTML = `HELLO ${user.fName} ${user.lName}`;
+
+        console.log(cookUtl.getCookie('user'));
+    </script>
+
 </body>
+
 </html>
