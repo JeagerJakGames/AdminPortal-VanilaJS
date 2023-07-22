@@ -28,8 +28,12 @@ const main = async () => {
     let isAdmin = await checkIfAdmin(await cuser.id);
     if(cuser.id == euser.id || isAdmin){
         await setUpContent(euser);
+    }
+    if(isAdmin){
         getEl('btnAddToAdmin').disabled = false;
         getEl('btnRemoveAdmin').disabled = false;
+        getEl('btnRemoveUser').disabled = false;
+        getEl('btnNewUser').disabled = false;
     }
     
 }
@@ -76,6 +80,7 @@ const setUpContent = async (user) => {
 }
 
 const submitUpdate = async () => {
+    let newUser = null;
     for(let key of Object.keys(euser)){
         let element = getEl(key);
         if(element){
@@ -90,8 +95,12 @@ const submitUpdate = async () => {
     body: JSON.stringify(euser) // Send the updated user data as JSON
   })
   .then(response => response.json())
-  .then(data => console.log(data))
+  .then(data =>{
+    console.log(data)
+    newUser = data;
+  })
   .catch(error => console.error('Error updating user:', error));
+  return newUser;
 }
 
 const MakeAdmin = async () => {
@@ -124,6 +133,46 @@ const RemoveAdmin = async () => {
       
 }
 
+const AddUser = async () => {
+    console.warn("Add USER");
+    euser.id = 0;
+    let u =  await submitUpdate();
+    alert(`New User ID: ${u.id}`)
+    
+}
+
+const RemoveUser = async () => {
+    if (await checkIfAdmin(cuser.id)) {
+        await fetch(`http://localhost:5000/api/User/${euser.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error deleting user:', error));
+      }
+}
+
+const ClearPage = async () => {
+    let btnThis = getEl('btnNewUser');
+    btnThis.removeEventListener('click', ClearPage);
+    btnThis.innerHTML = 'Save New User';
+    btnThis.addEventListener('click', async () => await AddUser());
+    document.querySelectorAll('button').forEach(b => {
+        if(b.id != btnThis.id){
+            b.style.display = 'none';
+        }
+    })
+    for(let key of Object.keys(euser)){
+        let element = getEl(key);
+        if(element){
+            element.value = '';
+        }
+    }
+}
+
 main();
 
 document.querySelector('form').addEventListener('submit', async (e) => {
@@ -139,5 +188,13 @@ getEl('btnAddToAdmin').addEventListener('click', async (e) => {
 getEl('btnRemoveAdmin').addEventListener('click', async (e) => {
     console.warn("REMOVE");
     await RemoveAdmin();
-})
+});
+
+getEl('btnRemoveUser').addEventListener('click', async (e) => {
+    console.warn("REMOVE");
+    await RemoveUser();
+});
+
+
+getEl('btnNewUser').addEventListener('click', ClearPage);
 
